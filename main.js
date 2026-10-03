@@ -76,4 +76,54 @@ if(desktop)$('a[href^="tel:"]').forEach(a=>a.addEventListener('click',e=>{
 }));
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);
   requestAnimationFrame(()=>t.classList.add('on'));setTimeout(()=>{t.classList.remove('on');setTimeout(()=>t.remove(),400)},2500)}
+
+// ===== animations souris (ordinateur uniquement) =====
+if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!reduce){
+  const mk=c=>{const d=document.createElement('div');d.className=c;document.body.appendChild(d);return d};
+  const glow=mk('fx-glow'),ring=mk('fx-ring');
+  let px=innerWidth/2,py=innerHeight/2,gx=px,gy=py,rx=px,ry=py,last=0,seen=false;
+  const logo=document.querySelector('.hero-logo'),leaves=$('.leaf'),mags=$('.btn:not(.call),.tel'),hero=document.querySelector('.hero');
+  const root=document.documentElement;
+  addEventListener('pointermove',e=>{
+    px=e.clientX;py=e.clientY;
+    if(!seen){seen=true;glow.style.opacity=1;ring.style.opacity=1}
+    root.style.setProperty('--bx',(-(px/innerWidth-.5)*40)+'px');
+    root.style.setProperty('--by',(-(py/innerHeight-.5)*40)+'px');
+    const n=performance.now();
+    if(n-last>55){last=n;spark(px,py)}
+    ring.classList.toggle('big',!!e.target.closest('a,button,.card,.cmp,input,textarea,.gal div'));
+  },{passive:true});
+  addEventListener('pointerdown',e=>{const d=mk('fx-click');d.style.left=e.clientX+'px';d.style.top=e.clientY+'px';setTimeout(()=>d.remove(),700)});
+  function spark(x,y){const s=mk('fx-spark');s.style.left=x-4+'px';s.style.top=y-4+'px';
+    s.style.setProperty('--dx',(Math.random()*60-30)+'px');s.style.setProperty('--dy',(Math.random()*60-10)+'px');setTimeout(()=>s.remove(),900)}
+  (function loop(){
+    gx+=(px-gx)*.08;gy+=(py-gy)*.08;rx+=(px-rx)*.22;ry+=(py-ry)*.22;
+    glow.style.transform=`translate3d(${gx}px,${gy}px,0)`;
+    ring.style.transform=`translate3d(${rx}px,${ry}px,0)`;
+    // logo 3D qui suit la souris
+    if(logo&&scrollY<innerHeight){
+      const r=logo.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+      const dx=Math.max(-1,Math.min(1,(px-cx)/(innerWidth/2))),dy=Math.max(-1,Math.min(1,(py-cy)/(innerHeight/2)));
+      logo.style.transform=`perspective(900px) rotateY(${dx*16}deg) rotateX(${-dy*16}deg) scale(1.03)`;
+      logo.style.boxShadow=`${-dx*24}px ${24-dy*20}px 70px -18px rgba(0,0,0,.75),0 0 60px rgba(108,192,74,${.12+Math.abs(dx)*.2})`;
+      $('.hero h1,.hero .eyebrow,.hero p').forEach((t,i)=>t.style.transform=`translate(${dx*(6+i*3)}px,${dy*(4+i*2)}px)`);
+      // feuilles repoussées
+      leaves.forEach(l=>{const b=l.getBoundingClientRect(),lx=b.left+b.width/2,ly=b.top+b.height/2,vx=lx-px,vy=ly-py,d=Math.hypot(vx,vy);
+        if(d<220){const f=(220-d)/220*90;l.style.translate=`${vx/d*f}px ${vy/d*f}px`}else l.style.translate='0 0'});
+    }
+    requestAnimationFrame(loop);
+  })();
+  // boutons magnétiques
+  mags.forEach(m=>{
+    m.addEventListener('pointermove',e=>{const r=m.getBoundingClientRect();
+      m.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`});
+    m.addEventListener('pointerleave',()=>m.style.transform='');
+  });
+  // images de la galerie : léger suivi de la souris
+  $('.gal div,.cmp').forEach(g=>{
+    g.addEventListener('pointermove',e=>{const r=g.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      g.style.transform=`perspective(900px) rotateY(${x*8}deg) rotateX(${-y*8}deg) scale(1.02)`});
+    g.addEventListener('pointerleave',()=>g.style.transform='');
+  });
+}
 })();
