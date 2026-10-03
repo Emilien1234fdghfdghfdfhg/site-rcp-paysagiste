@@ -1,5 +1,6 @@
 :root{--bg:#0b1a11;--bg2:#10261a;--cream:#f4efe4;--ink:#10261a;--gold:#c9a96a;--leaf:#6fae6a;--mut:#9fb3a3;--r:20px;--ease:cubic-bezier(.2,.7,.2,1)}
 *{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(7,17,11,.45),rgba(7,17,11,.8)),url(assets/fond.jpg) center/cover no-repeat}
 body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--cream);line-height:1.65;overflow-x:hidden}
 h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:500;line-height:1.08;letter-spacing:-.02em}
 img{max-width:100%;display:block}a{color:inherit}
@@ -26,7 +27,7 @@ nav .wrap{display:flex;justify-content:space-between;align-items:center;height:6
 @keyframes rip{to{transform:scale(4);opacity:0}}
 
 /* hero */
-.hero{min-height:100svh;padding:0;display:flex;align-items:center;overflow:hidden;background:linear-gradient(#0b1a11,#143222 70%)}
+.hero{min-height:100svh;padding:0;display:flex;align-items:center;overflow:hidden;background:transparent}
 .layer{position:absolute;inset:0;will-change:transform}
 .layer svg{position:absolute;bottom:-2px;left:-5%;width:110%;height:auto}
 .glow{position:absolute;width:60vw;height:60vw;max-width:700px;max-height:700px;right:-10%;top:5%;background:radial-gradient(circle,rgba(201,169,106,.35),transparent 65%);border-radius:50%}
@@ -103,3 +104,14 @@ footer a{text-decoration:none;border-bottom:1px solid transparent;transition:bor
 .rv.l{transform:translateX(-50px)}.rv.l.in{transform:none}
 .rv.z{transform:scale(.94)}.rv.z.in{transform:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.h-in>*{opacity:1;transform:none}}
+
+.logo{display:flex;align-items:center;gap:.6rem}.logo img{border-radius:50%}
+.hero-logo{width:clamp(150px,34vw,260px);height:auto;border-radius:50%;margin:0 0 1.4rem;box-shadow:0 0 0 6px rgba(244,239,228,.12),0 30px 70px -20px rgba(0,0,0,.7);animation:breath 6s ease-in-out infinite alternate}
+@keyframes breath{to{transform:translateY(-8px) scale(1.03)}}
+.hero .wrap{padding-top:96px;padding-bottom:110px}
+.hero h1{font-size:clamp(2.4rem,9vw,5.5rem);max-width:none}
+.hero p{margin:1rem 0 1.6rem}
+.hero .wrap{text-align:center;display:flex;flex-direction:column;align-items:center}
+.hero .acts{justify-content:center}
+.proof,.light{position:relative;z-index:1}
+nav .btn{white-space:nowrap}@media(max-width:480px){nav .btn{padding:.6rem 1rem;font-size:.9rem}.logo{font-size:1.05rem}.logo img{width:34px;height:34px}.hero .wrap{padding-top:84px}}
