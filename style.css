@@ -115,3 +115,4 @@ footer a{text-decoration:none;border-bottom:1px solid transparent;transition:bor
 .hero .acts{justify-content:center}
 .proof,.light{position:relative;z-index:1}
 nav .btn{white-space:nowrap}@media(max-width:480px){nav .btn{padding:.6rem 1rem;font-size:.9rem}.logo{font-size:1.05rem}.logo img{width:34px;height:34px}.hero .wrap{padding-top:84px}}
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,20px);background:#fff;color:#000;padding:.8rem 1.4rem;border-radius:999px;font-weight:600;opacity:0;transition:.4s var(--ease);z-index:100}.toast.on{opacity:1;transform:translate(-50%,0)}

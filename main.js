@@ -59,4 +59,21 @@ f&&f.addEventListener('submit',e=>{
   location.href='mailto:contact@example.com?subject='+encodeURIComponent('Demande de devis – '+d.get('nom'))+'&body='+encodeURIComponent(`Nom : ${d.get('nom')}\nTéléphone : ${d.get('tel')}\n\n${d.get('besoin')}`);
   f.querySelector('.ok').style.display='block';
 });
+// ancres : défilement fiable même dans une visionneuse/iframe
+$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const t=a.getAttribute('href')==='#top'?document.body:document.querySelector(a.getAttribute('href'));
+  if(!t)return;e.preventDefault();
+  const y=t===document.body?0:t.getBoundingClientRect().top+scrollY-60;
+  scrollTo({top:y,behavior:reduce?'auto':'smooth'});
+}));
+// téléphone : sur ordinateur (sans appli d'appel), copie le numéro
+const desktop=!matchMedia('(pointer:coarse)').matches;
+if(desktop)$('a[href^="tel:"]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  const n=a.getAttribute('href').replace('tel:','');
+  (navigator.clipboard?navigator.clipboard.writeText(n):Promise.reject()).catch(()=>{});
+  toast('Numéro copié : 06 01 02 03 04');
+}));
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('on'));setTimeout(()=>{t.classList.remove('on');setTimeout(()=>t.remove(),400)},2500)}
 })();
