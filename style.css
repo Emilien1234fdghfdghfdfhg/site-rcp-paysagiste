@@ -1,7 +1,7 @@
 :root{--bg:#070a07;--bg2:#0f1a10;--cream:#ffffff;--ink:#0a0a0a;--gold:#6cc04a;--leaf:#4a9a3a;--mut:#b4bfb4;--r:20px;--ease:cubic-bezier(.2,.7,.2,1)}
 *{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
 body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.8)),url(assets/fond.jpg) center/cover no-repeat}
-body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--cream);line-height:1.65;overflow-x:hidden}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--cream);line-height:1.65;overflow-x:clip}
 h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:500;line-height:1.08;letter-spacing:-.02em}
 img{max-width:100%;display:block}a{color:inherit}
 .wrap{max-width:1140px;margin:auto;padding:0 20px}
@@ -99,11 +99,11 @@ footer a{text-decoration:none;border-bottom:1px solid transparent;transition:bor
 @media(min-width:760px){.call{display:none}}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(46px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--dl,0s)}
-.rv.in{opacity:1;transform:none}
-.rv.l{transform:translateX(-50px)}.rv.l.in{transform:none}
-.rv.z{transform:scale(.94)}.rv.z.in{transform:none}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.h-in>*{opacity:1;transform:none}}
+.js .rv{opacity:0;transform:translateY(46px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--dl,0s)}
+.js .rv.in{opacity:1;transform:none}
+.js .rv.l{transform:translateX(-50px)}.js .rv.l.in{transform:none}
+.js .rv.z{transform:scale(.94)}.js .rv.z.in{transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv,.h-in>*{opacity:1;transform:none}}
 
 .logo{display:flex;align-items:center;gap:.6rem}.logo img{border-radius:50%}
 .hero-logo{width:clamp(150px,34vw,260px);height:auto;border-radius:50%;margin:0 0 1.4rem;box-shadow:0 0 0 6px rgba(255,255,255,.12),0 30px 70px -20px rgba(0,0,0,.7);animation:breath 6s ease-in-out infinite alternate}

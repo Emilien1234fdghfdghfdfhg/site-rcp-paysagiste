@@ -1,5 +1,6 @@
 (()=>{
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+document.documentElement.classList.add('js');
 const $=(s,c=document)=>[...c.querySelectorAll(s)];
 // nav bg
 const nav=document.querySelector('nav');
@@ -26,6 +27,8 @@ req();
 // reveal
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
 $('.rv').forEach(el=>io.observe(el));
+setTimeout(()=>$('.rv').forEach(el=>el.classList.add('in')),3500);
+addEventListener('scroll',()=>{$('.rv:not(.in)').forEach(el=>{if(el.getBoundingClientRect().top<innerHeight*.9)el.classList.add('in')})},{passive:true});
 // card tilt + glow
 $('.card').forEach(c=>{
   c.addEventListener('pointermove',e=>{
